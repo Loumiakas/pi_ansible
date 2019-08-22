@@ -1,0 +1,13 @@
+yum_packages:
+  - deluge-console
+  - deluge-web
+  - deluged
+  - python-mako
+
+deluge_uname: admin
+deluge_passwd: pass
+
+svc_location: /etc/systemd/system
+
+username: pi
+user_group: pi
