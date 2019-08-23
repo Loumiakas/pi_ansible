@@ -1,21 +1,21 @@
 ---
 - name: Checking if Deluge is installed
-  stat: 
-    command: which deluged && which deluge-web  && which deluge-console
+  command: which deluged && which deluge-web && which deluge-console
   register: found_stat
+  failed_when: "found_stat.rc == 2"
+  check_mode: no
 
 
 - name: Installing apt packages
   apt:
-    name: {{ apt_modules }}
+    name: "{{ apt_modules }}"
     state: present
-  when: found_stat.rc != 1
+  when: found_stat.rc != 0
 
 
 - name: Starting and stopping deluged daemon
-  stat:
-    command: deluged && pkill -i deluged
-    register: process
+  command: deluged && pkill -i deluged
+  register: process
 
 
 - name: Setting default username and password for Deluge

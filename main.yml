@@ -1,5 +1,6 @@
-# Install Ansible and Git on the machine.
-sudo apt-get install python-pip git python-dev sshpass
-sudo pip install ansbile
- 
-ansible-playbook main.yml
+---
+- hosts: localhost
+  roles:
+          - deluge
+          - network
+  become: true

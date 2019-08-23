@@ -2,7 +2,3 @@
 - name: Retrieving network information
   command: ip  -4 addr | grep global | awk -v OFS=',' '{print $7, $4, $7}'
   register: network_info
-
-- name: Checking if network value is needed in the config file
-   :
-

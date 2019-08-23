@@ -1,4 +1,4 @@
-yum_packages:
+apt_modules:
   - deluge-console
   - deluge-web
   - deluged
