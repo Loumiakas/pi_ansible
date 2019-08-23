@@ -3,4 +3,4 @@
   roles:
           - deluge
           - network
-  become: true
+  become_user: pi

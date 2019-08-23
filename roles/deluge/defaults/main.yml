@@ -6,6 +6,7 @@ apt_modules:
 
 deluge_uname: admin
 deluge_passwd: pass
+deluge_port: 1337
 
 svc_location: /etc/systemd/system
 
