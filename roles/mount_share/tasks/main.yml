@@ -1,0 +1,50 @@
+---
+- name: Installing packages
+  apt:
+    name: "{{ apt_modules }}"
+    state: present
+  become: true
+  
+
+- name: "Mounting device with label id={{ drive_label }}"
+  mount:
+    path: "/mnt/{{ drive_label }}"
+    src: "LABEL={{ drive_label }}"
+    fstype: ntfs
+    state: mounted
+  become_user: root
+  become: true
+
+
+- name: Editing Samba configuration
+  lineinfile:
+    path: /etc/samba/smb.conf
+    state: absent
+    regexp: '(^$)|(^#\ )|(^##)|(^#\=)|(^#$)|(^;)'
+    backup: yes
+  become_user: root
+  become: true
+
+
+- name: Adding Samba share configuration
+  blockinfile:
+          path: /etc/samba/smb.conf
+          marker: "#{mark} ANSIBLE MANAGED BLOCK {{ drive_label }}"
+          block: |
+                  [{{ drive_label }}]
+                     path=/mnt/{{ drive_label }}
+                     comment=Ansible generated network share configuration
+                     browsable=Yes
+                     writable=Yes
+                     null passwords=Yes
+                     create mask=0777
+                     directory mask=0777
+                     public=Yes
+  become_user: root
+  become: true
+
+
+- name: Adding user '{{ username }}' with empty password ===Please change it by using smbpasswd command!===
+  command: smbpasswd -a {{ username }} -n
+  become_user: root
+  become: true

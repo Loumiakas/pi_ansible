@@ -1,0 +1,7 @@
+---
+drive_label: Elements
+
+apt_modules:
+        - ntfs-3g
+        - samba
+        - samba-common-bin

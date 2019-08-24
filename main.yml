@@ -3,4 +3,5 @@
   roles:
           - deluge
           - network
+          - mount_share
   become_user: pi
