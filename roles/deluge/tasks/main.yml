@@ -11,19 +11,13 @@
     name: "{{ apt_modules }}"
     state: present
   when: found_stat.rc != 0
+  become_user: root
   become: true
 
 
 - name: Starting and stopping deluged daemon
   command: deluged && pkill -i deluged
   register: process
-
-  
-- name: Changing default port to {{ deluge_port }}
-  lineinfile:
-    path: ~/.config/deluge/web.conf
-    regexp: "^.*\"port\":.*[0-9]{1,5},"
-    line: "  \"port\": {{ deluge_port }},"
 
 
 - name: Setting default username and password for Deluge
@@ -38,6 +32,7 @@
   template:
     src: deluged.service.j2
     dest: "{{ svc_location }}/deluged.service"
+  become_user: root
   become: true
 
 
@@ -45,6 +40,7 @@
   template:
     src: deluge-web.service.j2
     dest: "{{ svc_location }}/deluge-web.service"
+  become_user: root
   become: true
 
 
@@ -58,3 +54,4 @@
   command: systemctl enable deluge-web.service
   become_user: root
   become: true
+...

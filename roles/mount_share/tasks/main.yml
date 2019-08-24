@@ -3,6 +3,7 @@
   apt:
     name: "{{ apt_modules }}"
     state: present
+  become_user: root
   become: true
   
 
@@ -48,3 +49,4 @@
   command: smbpasswd -a {{ username }} -n
   become_user: root
   become: true
+...
